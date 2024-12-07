@@ -6,7 +6,7 @@ export default function Login() {
       <div className="w-1/4 border border-[#F5F7F9] p-5 shadow rounded">
         <h1 className="text-xl font-bold">Faça Login</h1>
         <p className="text-sm text-neutral-400">
-          Entre com a sua conta do google ou então com a sua conta do APP.
+          Entre com a sua conta do google. Em breve disponibilizaremos novos métodos de login.
         </p>
         <div className="w-[90%] mx-auto rounded-lg h-[2px] mt-5 bg-neutral-200"/>
         <div className="flex justify-center">
