@@ -7,25 +7,37 @@ type MenucardProps = {
   Icon: ElementType;
   isActive: boolean;
   routeName: string;
+  isOpen: boolean;
 };
 
-function Menucard({ Icon, isActive, title,routeName }: MenucardProps) {
+function Menucard({ Icon, isActive, title, routeName, isOpen }: MenucardProps) {
   return (
     <Link href={`/sections/${routeName}`}>
-      <div
-        className={cn(
-          "flex items-center gap-3 p-2 w-[90%] mx-auto rounded cursor-pointer",
-          isActive ? "bg-white shadow" : "bg-transparent"
-        )}
-      >
-        <Icon
+      {isOpen ? (
+        <div
           className={cn(
-            "size-5",
-            isActive ? "text-app_selected_icon" : "text-app_non_selected_icon"
+            "flex items-center gap-3 p-2 w-[90%] mx-auto rounded cursor-pointer",
+            isActive ? "bg-white shadow" : "bg-transparent"
           )}
-        />
-        <p className="text-sm font-medium">{title}</p>
-      </div>
+        >
+          <Icon
+            className={cn(
+              "size-5",
+              isActive ? "text-app_selected_icon" : "text-app_non_selected_icon"
+            )}
+          />
+          <p className="text-sm font-medium">{title}</p>
+        </div>
+      ) : (
+        <div className={cn("rounded mx-auto w-fit p-1", isActive ? "bg-white shadow-md" : "bg-transparent hover:bg-app_secondary hover:shadow transition-all duration-100")}>
+          <Icon
+            className={cn(
+              "size-5",
+              isActive ? "text-app_selected_icon" : "text-app_non_selected_icon"
+            )}
+          />
+        </div>
+      )}
     </Link>
   );
 }
