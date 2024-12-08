@@ -12,6 +12,16 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+				app_primary: '#ffffff',
+				app_secondary: '#F5F7F9',
+				app_non_selected_icon: '#A4A4A4',
+				app_selected_icon: '#000000',
+				app_progress_bar: '#E5FBF2',
+				app_card_blue: '#EBF0FE',
+				app_card_purple: '#E2E5FD',
+				app_card_purple_light: '#F1ECFE',
+				app_card_green: '#F2F5F1',
+				app_card_yellow: '#FFF4D8',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

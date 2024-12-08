@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 export default function Login() {
   return (
     <div className="flex h-full justify-center items-center">
-      <div className="w-1/4 border border-[#F5F7F9] p-5 shadow rounded">
+      <div className="w-1/4 border border-app_secondary p-5 shadow rounded">
         <h1 className="text-xl font-bold">Faça Login</h1>
         <p className="text-sm text-neutral-400">
           Entre com a sua conta do google. Em breve disponibilizaremos novos métodos de login.
