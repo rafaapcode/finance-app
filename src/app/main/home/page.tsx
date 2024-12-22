@@ -1,7 +1,8 @@
+import HomePage from "@/pages/Home/page"
 
 function MainApp() {
   return (
-    <div>MainApp</div>
+    <HomePage />
   )
 }
 

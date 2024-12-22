@@ -1,7 +1,9 @@
+import Image from "next/image";
 import { BsGrid } from "react-icons/bs";
 import { GoHomeFill } from "react-icons/go";
 import { IoIosSettings } from "react-icons/io";
 import { PiMoneyWavyFill } from "react-icons/pi";
+import UserImg from "../../../public/user-img.jpg";
 import MenuItems from "./MenuItems";
 
 function CloseSidebar() {
@@ -16,7 +18,9 @@ function CloseSidebar() {
         <MenuItems isClosed routeName="settings" Icon={IoIosSettings} isActive={false} title="Configurações"/>
         <MenuItems isClosed routeName="general" Icon={BsGrid} isActive={false} title="Visão Geral"/>
       </section>
-      <footer>Footer</footer>
+      <footer className="size-11 rounded-full relative">
+        <Image fill src={UserImg} alt="user image" className="rounded-full" />
+      </footer>
     </section>
   )
 }
