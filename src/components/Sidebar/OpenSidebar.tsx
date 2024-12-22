@@ -26,12 +26,12 @@ function OpenSidebar() {
           <h3 className="text-lg">R$ 2.000.000,00</h3>
         </div>
       <footer className="bg-white flex gap-2 p-2 border border-neutral-200 rounded-md">
-        <div className="size-11 rounded-full relative">
+        <div className="min-w-11 size-11 rounded-full relative">
           <Image fill src={UserImg} alt="user image" className="rounded-full"/>
         </div>
-        <div className="max-w-full">
-          <h2 className="text-sm">Nome</h2>
-          <p className="text-xs max-w-full">email</p>
+        <div className="max-w-full overflow-hidden whitespace-nowrap text-ellipsis">
+          <h2 className="text-sm text-ellipsis">Nome</h2>
+          <p className="text-xs text-ellipsis">emailemail</p>
         </div>
       </footer>
     </section>
