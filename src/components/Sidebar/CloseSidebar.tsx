@@ -1,12 +1,12 @@
-import { BsGrid } from "react-icons/bs"
-import { GoHomeFill } from "react-icons/go"
-import { IoIosSettings } from "react-icons/io"
-import { PiMoneyWavyFill } from "react-icons/pi"
-import MenuItems from "./MenuItems"
+import { BsGrid } from "react-icons/bs";
+import { GoHomeFill } from "react-icons/go";
+import { IoIosSettings } from "react-icons/io";
+import { PiMoneyWavyFill } from "react-icons/pi";
+import MenuItems from "./MenuItems";
 
 function CloseSidebar() {
   return (
-    <section className="bg-[#F5F7F9] flex flex-col p-3 w-[4%] items-center">
+    <section  className="bg-[#F5F7F9] overflow-hidden flex flex-col p-3 w-[4%] items-center transition-all duration-300">
       <header className="mb-5">
         Logo
       </header>
