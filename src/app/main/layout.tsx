@@ -1,3 +1,4 @@
+import CloseSidebar from "@/components/Sidebar/CloseSidebar";
 
 type LayoutMainProps = {
   children: React.ReactNode;
@@ -5,9 +6,10 @@ type LayoutMainProps = {
 
 function LayoutMain({ children }: LayoutMainProps) {
   return (
-    <div className="flex gap-5">
-      <div className="bg-red-300 w-[10%]">Sidebar</div>
-      <div className="bg-red-700 flex-1">
+    <div className="flex gap-5 h-full">
+      {/* <OpenSidebar /> */}
+      <CloseSidebar />
+      <div className="flex-1 py-2">
         {children}
       </div>
     </div>
