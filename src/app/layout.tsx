@@ -1,4 +1,3 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
@@ -24,9 +23,7 @@ export default function RootLayout({
       <body
         className={`${quicksand.className} antialiased`}
       >
-        <SidebarProvider>
-          {children}
-        </SidebarProvider>
+        {children}
       </body>
     </html>
   );
