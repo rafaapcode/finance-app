@@ -15,7 +15,7 @@ function Card({color, handleClick, routeName, title, description, value}: CardPr
   const router = useRouter();
 
   return (
-    <div className={`flex flex-col justify-between flex-1 h-48 ${color} rounded-md shadow p-5`}>
+    <div className={`flex w-1/4 flex-col justify-between flex-initial h-48 ${color} rounded-md shadow p-5`}>
       <header className="flex justify-between items-center">
         <h2 className="text-xl">{title}</h2>
         <button onClick={handleClick ? handleClick : () => router.push(routeName || "/main/home")} className="bg-white hover:bg-neutral-100 shadow-sm transition-all duration-100 size-9 rounded-xl flex items-center justify-center">

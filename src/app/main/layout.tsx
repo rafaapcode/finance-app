@@ -1,33 +1,23 @@
 "use client";
-import CloseSidebar from "@/components/Sidebar/CloseSidebar";
-import OpenSidebar from "@/components/Sidebar/OpenSidebar";
-import { useCallback, useState } from "react";
-import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
+import { AppSidebar } from "@/components/sidebar/AppSidebar";
+import { useSidebar } from "@/components/ui/sidebar";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 type LayoutMainProps = {
   children: React.ReactNode;
 };
 
 function LayoutMain({ children }: LayoutMainProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
+  const {toggleSidebar,open} = useSidebar();
 
   return (
-    <div className="flex gap-5 h-full overflow-hidden">
-      {isOpen ? <OpenSidebar /> : <CloseSidebar />}
-      <button onClick={toggleSidebar} className="self-start mt-2 p-1 hover:bg-neutral-200 transition-all duration-100 rounded-md">
-        {isOpen ? (
-          <LuPanelLeftClose size={18} />
-        ) : (
-          <LuPanelRightClose size={18} />
-        )}
-      </button>
-
-      <div className="flex-1 py-2">{children}</div>
-    </div>
+    <div className="flex w-full h-full">
+    <AppSidebar />
+    <button onClick={toggleSidebar} className="self-start hover:bg-neutral-100 rounded-md transition-all duration-150 m-2">
+      {!open &&  <IoIosArrowRoundForward size={25}/>}
+    </button>
+    <div className="container mx-auto py-2">{children}</div>
+  </div>
   );
 }
 
