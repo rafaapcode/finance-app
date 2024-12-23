@@ -10,8 +10,8 @@ type SpendCardProps = {
 
 function SpendCard({Icon, category, spendValue, color}: SpendCardProps) {
   return (
-    <div className={`w-56 h-56 flex flex-col justify-between flex-initial ${color} p-5 rounded-xl`}>
-      <div className="bg-white w-16 h-16 rounded-lg flex items-center justify-center">
+    <div className={`w-40 h-40 lg:w-56 lg:h-56 flex flex-col justify-between flex-initial ${color} p-5 rounded-xl`}>
+      <div className="bg-white w-10 h-10 lg:w-16 lg:h-16 rounded-lg flex items-center justify-center">
         {Icon && <Icon />}
       </div>
       <div>

@@ -19,7 +19,7 @@ export function AppSidebar() {
   const {toggleSidebar, open} = useSidebar()
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" className="h-full">
       <SidebarHeader className="relative">
         <h1 className="text-lg text-center font-semibold text-neutral-900">LOGO</h1>
         {open && <button onClick={toggleSidebar} className="absolute right-3 hover:bg-neutral-200 transition-all duration-200 rounded-md">
