@@ -1,70 +1,52 @@
+"use client";
 import Card from "@/components/card/Card";
 import Goals from "@/components/goals/Goals";
+import IncomeModal from "@/components/modal/IncomeModal";
+import Modal from "@/components/modal/Modal";
+import OutcomeModal from "@/components/modal/OutcomeModal";
 import SpendCard from "@/components/spendCard/SpendCard";
-
-const COLORS = [
-  "bg-[#E2E5FD]",
-  "bg-[#FFF4D8]",
-  "bg-[#EBF0FE]",
-  "bg-[#F2F5F1]",
-  "bg-[#F1ECFE]",
-];
-
-function getRandomColor() {
-  return COLORS[Math.floor(Math.random() * COLORS.length)];
-}
-
-const spendCardsData = [
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-  {
-    category: "Home",
-    color: getRandomColor(),
-    spendValue: "500,00",
-  },
-];
+import { ChangeEvent, useCallback, useState } from "react";
+import { spendCardsData } from "../../../constants/spendCads";
 
 function HomePage() {
+  const [modal, setModal] = useState(false);
+  const [incomeValue, setIncomeValue] = useState("0");
+  const [typeModal, setTypeModal] = useState<null | "income" | "outcome">(null);
+
+  const handleModal = useCallback((type: "income" | "outcome" | null) => {
+    setModal((prev) => !prev);
+    setTypeModal(type);
+  }, []);
+
+  const handlClose = useCallback(() => {
+    setModal(false);
+    setTypeModal(null);
+  }, []);
+
+  const handleIncomeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const regex = /^\d*$/;
+    const value = e.target.value;
+    
+    if(!regex.test(value)) {
+      setIncomeValue(prev => prev);
+    } else {
+      setIncomeValue(value);
+    }
+  }, []);
+
   return (
     <main className="h-full flex-1 overflow-y-auto scrollbar-none">
       <div className="mb-10 py-2 lg:py-0 flex-1">
         <h2 className="text-3xl">Home</h2>
         <section className="flex md:gap-4 lg:justify-evenly lg:px-3 mt-5">
-          <Card color="bg-[#EBF0FE]" title="Entradas" value="2.500,00" />
           <Card
+            handleClick={() => handleModal("income")}
+            color="bg-[#EBF0FE]"
+            title="Entradas"
+            value="2.500,00"
+          />
+          <Card 
+             handleClick={() => handleModal("outcome")}
             color="bg-[#FFF4D8]"
             title="Gastos"
             value="500,00"
@@ -85,7 +67,6 @@ function HomePage() {
             <SpendCard
               key={index}
               category={spend.category}
-              color={spend.color}
               spendValue={spend.spendValue}
             />
           ))}
@@ -99,6 +80,16 @@ function HomePage() {
           <Goals title="Investimentos" amount="1.5k" goal="2.5K" />
         </div>
       </div>
+      {modal && (
+        <Modal>
+          {
+            typeModal === "income" && <IncomeModal incomeValue={incomeValue} changeIncomeValue={handleIncomeValue} handlClose={handlClose}/>
+          }
+          {
+            typeModal === "outcome" && <OutcomeModal handlClose={handlClose}/>
+          }
+        </Modal>
+      )}
     </main>
   );
 }
