@@ -20,7 +20,7 @@ function Sidebar() {
         <MenuItem Icon={IoSettings} routeName="settings" isActive={pathName === "/main/settings"}/>
         <MenuItem Icon={BsGrid} routeName="general" isActive={pathName === "/main/general"}/>
       </div>
-      <div>
+      <div className="lg:hidden xl:block">
         <p className="text-xs">Saldo</p>
         <p className="text-sm font-semibold">R$ 1.112.500,00</p>
       </div>

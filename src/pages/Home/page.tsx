@@ -1,4 +1,5 @@
 import Card from "@/components/card/Card";
+import Goals from "@/components/goals/Goals";
 import SpendCard from "@/components/spendCard/SpendCard";
 
 const COLORS = [
@@ -53,7 +54,7 @@ const spendCardsData = [
     category: "Home",
     color: getRandomColor(),
     spendValue: "500,00",
-  }
+  },
 ];
 
 function HomePage() {
@@ -92,7 +93,11 @@ function HomePage() {
       </div>
       <div className="flex-1 mb-10 py-2 lg:py-0">
         <h2 className="text-3xl mb-5">Minhas Metas</h2>
-        
+        <div className="h-full flex flex-col gap-10">
+          <Goals title="Investimentos" amount="1.5k" goal="2.5K" />
+          <Goals title="Investimentos" amount="1.5k" goal="2.5K" />
+          <Goals title="Investimentos" amount="1.5k" goal="2.5K" />
+        </div>
       </div>
     </main>
   );
