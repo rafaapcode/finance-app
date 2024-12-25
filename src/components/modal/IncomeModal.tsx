@@ -1,6 +1,7 @@
 "use client";
 import { ChangeEvent, memo } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { Switch } from "../ui/switch";
 
 type IncomeModalProps = {
   handlClose: () => void;
@@ -9,6 +10,7 @@ type IncomeModalProps = {
   onBlur: () => void;
   typeIncome: "sallary" | "extra";
   setTypeIncome: (type: "sallary" | "extra") => void;
+  onClick: () => void;
 };
 
 function IncomeModal({
@@ -16,6 +18,9 @@ function IncomeModal({
   changeIncomeValue,
   incomeValue,
   onBlur,
+  setTypeIncome,
+  typeIncome,
+  onClick
 }: IncomeModalProps) {
   return (
     <div className="min-w-96 bg-white p-5 rounded-md">
@@ -25,8 +30,11 @@ function IncomeModal({
           <IoIosCloseCircleOutline size={25} />
         </button>
       </div>
-      <div className="mb-10">1</div>
-      <p className="text-xl text-center">Renda</p>
+      <div className="mb-10 flex gap-2 items-center">
+        <Switch onCheckedChange={(checked) => checked ? setTypeIncome("extra") : setTypeIncome("sallary")}/>
+        <p>{typeIncome === "sallary" ? "Salário" : "Extra"}</p>
+      </div>
+      <p className="text-xl text-center">{ typeIncome === "sallary" ? "Renda" : "Renda Extra"}</p>
       <div className="w-1/2 mx-auto flex gap-2 mt-5 items-center">
         <h2>R$</h2>
         <input
@@ -38,7 +46,7 @@ function IncomeModal({
         />
       </div>
       <div className="flex mt-5">
-        <button className="mx-auto bg-neutral-100 hover:bg-neutral-200 transition-all duration-200 p-2 rounded">Atualizar Salário</button>
+        <button onClick={onClick} className="mx-auto bg-neutral-100 hover:bg-neutral-200 transition-all duration-200 p-2 rounded">{typeIncome === "sallary" ? "Atualizar" : "Adicionar"}</button>
       </div>
     </div>
   );

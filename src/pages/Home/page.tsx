@@ -42,6 +42,12 @@ function HomePage() {
     setTypeOfIncome(typeIncome);
   }, []);
 
+  const handlelick = useCallback(() => {
+    console.log(typeOfIncome, Number(incomeValue));
+    setFormattedValue("0");
+    setIncomeValue("0");
+  }, [typeOfIncome, incomeValue]);
+
   return (
     <main className="h-full flex-1 overflow-y-auto scrollbar-none">
       <div className="mb-10 py-2 lg:py-0 flex-1">
@@ -92,7 +98,7 @@ function HomePage() {
         // TODO: Criar composition pattern para os MODAIS
         <Modal>
           {
-            typeModal === "income" && <IncomeModal typeIncome={typeOfIncome} setTypeIncome={handleTypeIncome} onBlur={() => setFormattedValue(new Intl.NumberFormat("pt-BR", {style: "decimal", currency: "BRL"}).format(Number(incomeValue)))} incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} handlClose={handlClose}/>
+            typeModal === "income" && <IncomeModal onClick={handlelick} typeIncome={typeOfIncome} setTypeIncome={handleTypeIncome} onBlur={() => setFormattedValue(new Intl.NumberFormat("pt-BR", {style: "decimal", currency: "BRL"}).format(Number(incomeValue)))} incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} handlClose={handlClose}/>
           }
           {
             typeModal === "outcome" && <OutcomeModal handlClose={handlClose}/>
