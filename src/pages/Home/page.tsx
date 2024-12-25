@@ -11,6 +11,8 @@ import { spendCardsData } from "../../../constants/spendCads";
 function HomePage() {
   const [modal, setModal] = useState(false);
   const [incomeValue, setIncomeValue] = useState("0");
+  const [formattedValue, setFormattedValue] = useState("0");
+  const [typeOfIncome, setTypeOfIncome] = useState<"sallary" | "extra">("sallary");
   const [typeModal, setTypeModal] = useState<null | "income" | "outcome">(null);
 
   const handleModal = useCallback((type: "income" | "outcome" | null) => {
@@ -29,9 +31,15 @@ function HomePage() {
     
     if(!regex.test(value)) {
       setIncomeValue(prev => prev);
+      setFormattedValue(prev => prev);
     } else {
       setIncomeValue(value);
+      setFormattedValue(value);
     }
+  }, []);
+
+  const handleTypeIncome = useCallback((typeIncome: "sallary" | "extra") => {
+    setTypeOfIncome(typeIncome);
   }, []);
 
   return (
@@ -81,9 +89,10 @@ function HomePage() {
         </div>
       </div>
       {modal && (
+        // TODO: Criar composition pattern para os MODAIS
         <Modal>
           {
-            typeModal === "income" && <IncomeModal incomeValue={incomeValue} changeIncomeValue={handleIncomeValue} handlClose={handlClose}/>
+            typeModal === "income" && <IncomeModal typeIncome={typeOfIncome} setTypeIncome={handleTypeIncome} onBlur={() => setFormattedValue(new Intl.NumberFormat("pt-BR", {style: "decimal", currency: "BRL"}).format(Number(incomeValue)))} incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} handlClose={handlClose}/>
           }
           {
             typeModal === "outcome" && <OutcomeModal handlClose={handlClose}/>
@@ -93,5 +102,4 @@ function HomePage() {
     </main>
   );
 }
-
 export default HomePage;
