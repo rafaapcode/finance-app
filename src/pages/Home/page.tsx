@@ -1,10 +1,10 @@
 "use client";
 import Card from "@/components/card/Card";
 import Goals from "@/components/goals/Goals";
-import IncomeModal from "@/components/modal/IncomeModal";
+import { CashFlow } from "@/components/modal/cashFlowModal";
 import Modal from "@/components/modal/Modal";
-import OutcomeModal from "@/components/modal/OutcomeModal";
 import SpendCard from "@/components/spendCard/SpendCard";
+import { Switch } from "@/components/ui/switch";
 import { ChangeEvent, useCallback, useState } from "react";
 import { spendCardsData } from "../../../constants/spendCads";
 
@@ -20,7 +20,7 @@ function HomePage() {
     setTypeModal(type);
   }, []);
 
-  const handlClose = useCallback(() => {
+  const handleClose = useCallback(() => {
     setModal(false);
     setTypeModal(null);
   }, []);
@@ -42,7 +42,11 @@ function HomePage() {
     setTypeOfIncome(typeIncome);
   }, []);
 
-  const handlelick = useCallback(() => {
+  const handleFormatIncomeValue = () => {
+    setFormattedValue(new Intl.NumberFormat("pt-BR", {style:"decimal", currency: "BRl"}).format(Number(incomeValue)));
+  }
+
+  const handleClick = useCallback(() => {
     console.log(typeOfIncome, Number(incomeValue));
     setFormattedValue("0");
     setIncomeValue("0");
@@ -98,10 +102,28 @@ function HomePage() {
         // TODO: Criar composition pattern para os MODAIS
         <Modal>
           {
-            typeModal === "income" && <IncomeModal onClick={handlelick} typeIncome={typeOfIncome} setTypeIncome={handleTypeIncome} onBlur={() => setFormattedValue(new Intl.NumberFormat("pt-BR", {style: "decimal", currency: "BRL"}).format(Number(incomeValue)))} incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} handlClose={handlClose}/>
+            typeModal === "income" && (
+              <CashFlow.Root>
+                <CashFlow.Header titleHeader="Adicionar Entrada" handleClose={handleClose}/>
+                <CashFlow.ContentController>
+                  <Switch onCheckedChange={(checked) => checked ? handleTypeIncome("extra") : handleTypeIncome("sallary")}/>
+                  <p>{typeOfIncome === "sallary" ? "Salário" : "Extra"}</p>
+                </CashFlow.ContentController>
+                <CashFlow.ContentTitle title={typeOfIncome === "sallary" ? "Renda":"Renda Extra"}/>
+                <CashFlow.QuantityInput incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} onBlur={handleFormatIncomeValue}/>
+                <CashFlow.ActionButton buttonTitle={typeOfIncome === "sallary" ? "Atualizar" : "Adicionar"} onClick={handleClick}/>
+              </CashFlow.Root>
+            )
           }
           {
-            typeModal === "outcome" && <OutcomeModal handlClose={handlClose}/>
+            typeModal === "outcome" && (
+              <CashFlow.Root>
+                <CashFlow.Header titleHeader="Adicionar Gasto" handleClose={handleClose}/>
+                <CashFlow.ContentTitle title="Gasto"/>
+                <CashFlow.QuantityInput incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} onBlur={handleFormatIncomeValue}/>
+                <CashFlow.ActionButton buttonTitle="Adicionar" onClick={handleClick}/>
+              </CashFlow.Root>
+            )
           }
         </Modal>
       )}
