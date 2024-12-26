@@ -1,5 +1,6 @@
 "use client";
 import Card from "@/components/card/Card";
+import DatePicker from "@/components/datePicker/DatePicker";
 import Goals from "@/components/goals/Goals";
 import { CashFlow } from "@/components/modal/cashFlowModal";
 import Modal from "@/components/modal/Modal";
@@ -18,7 +19,7 @@ function HomePage() {
   );
   const [typeOfOutcome, setTypeOfOutcome] = useState<string | null>("variable");
   const [typeOfPayment, setTypeOfPayment] = useState<string | null>("Credito");
-  const [expirationDate, setExpirationDate] = useState<Date | null>(null);
+  const [expirationDate, setExpirationDate] = useState<Date | undefined>(undefined);
   const [categoryOfIncome, setCategoryOfIncome] = useState<string | null>(null);
   const [categoryOfOutcome, setCategoryOfOutcome] = useState<string | null>(
     null
@@ -56,7 +57,7 @@ function HomePage() {
     setTypeOfOutcome(value);
   }, []);
 
-  const handleExpirationDate = useCallback((value: Date) => {
+  const handleExpirationDate = useCallback((value: Date | undefined) => {
     setExpirationDate(value);
   }, []);
 
@@ -236,11 +237,7 @@ function HomePage() {
                     />
                     {(typeOfPayment === "credito" ||
                       typeOfPayment === "debito") && (
-                      <SelectComponent
-                        placeHolder="Selecione a data de vecimento"
-                        onValueChange={handleTypePayment}
-                        categories={["Cartao", "Pix", "Boleto", "Debito"]}
-                      />
+                      <DatePicker date={expirationDate} setDate={handleExpirationDate}/>
                     )}
                   </>
                 )}
