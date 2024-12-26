@@ -1,4 +1,5 @@
 import ActionButton from "./ActionButton";
+import CategoryContent from "./CategoryContent";
 import ContentController from "./ContentController";
 import ContentTitle from "./ContentTitle";
 import Header from "./Header";
@@ -11,5 +12,6 @@ export const CashFlow = {
   ContentTitle,
   ContentController,
   ActionButton,
-  QuantityInput
+  QuantityInput,
+  CategoryContent
 }

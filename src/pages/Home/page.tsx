@@ -3,6 +3,7 @@ import Card from "@/components/card/Card";
 import Goals from "@/components/goals/Goals";
 import { CashFlow } from "@/components/modal/cashFlowModal";
 import Modal from "@/components/modal/Modal";
+import SelectComponent from "@/components/select/Select";
 import SpendCard from "@/components/spendCard/SpendCard";
 import { Switch } from "@/components/ui/switch";
 import { ChangeEvent, useCallback, useState } from "react";
@@ -12,7 +13,16 @@ function HomePage() {
   const [modal, setModal] = useState(false);
   const [incomeValue, setIncomeValue] = useState("0");
   const [formattedValue, setFormattedValue] = useState("0");
-  const [typeOfIncome, setTypeOfIncome] = useState<"sallary" | "extra">("sallary");
+  const [typeOfIncome, setTypeOfIncome] = useState<"sallary" | "extra">(
+    "sallary"
+  );
+  const [typeOfOutcome, setTypeOfOutcome] = useState<string | null>("variable");
+  const [typeOfPayment, setTypeOfPayment] = useState<string | null>("Credito");
+  const [expirationDate, setExpirationDate] = useState<Date | null>(null);
+  const [categoryOfIncome, setCategoryOfIncome] = useState<string | null>(null);
+  const [categoryOfOutcome, setCategoryOfOutcome] = useState<string | null>(
+    null
+  );
   const [typeModal, setTypeModal] = useState<null | "income" | "outcome">(null);
 
   const handleModal = useCallback((type: "income" | "outcome" | null) => {
@@ -28,10 +38,10 @@ function HomePage() {
   const handleIncomeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const regex = /^\d*$/;
     const value = e.target.value;
-    
-    if(!regex.test(value)) {
-      setIncomeValue(prev => prev);
-      setFormattedValue(prev => prev);
+
+    if (!regex.test(value)) {
+      setIncomeValue((prev) => prev);
+      setFormattedValue((prev) => prev);
     } else {
       setIncomeValue(value);
       setFormattedValue(value);
@@ -42,16 +52,64 @@ function HomePage() {
     setTypeOfIncome(typeIncome);
   }, []);
 
-  const handleFormatIncomeValue = () => {
-    setFormattedValue(new Intl.NumberFormat("pt-BR", {style:"decimal", currency: "BRl"}).format(Number(incomeValue)));
-  }
+  const handleTypeOutcome = useCallback((value: string | null) => {
+    setTypeOfOutcome(value);
+  }, []);
 
-  const handleClick = useCallback(() => {
-    console.log(typeOfIncome, Number(incomeValue));
+  const handleExpirationDate = useCallback((value: Date) => {
+    setExpirationDate(value);
+  }, []);
+
+  const handleTypePayment = useCallback((value: string | null) => {
+    setTypeOfPayment(value);
+  }, []);
+
+  const handleCategoryOfIncome = useCallback((value: string | null) => {
+    setCategoryOfIncome(value);
+  }, []);
+
+  const handleCategoryOfOutcome = useCallback((value: string | null) => {
+    setCategoryOfOutcome(value);
+  }, []);
+
+  const handleFormatIncomeValue = () => {
+    setFormattedValue(
+      new Intl.NumberFormat("pt-BR", {
+        style: "decimal",
+        currency: "BRl",
+      }).format(Number(incomeValue))
+    );
+  };
+
+  const handleClickIncome = useCallback(() => {
+    console.log(
+      typeOfIncome,
+      Number(incomeValue),
+      categoryOfIncome && categoryOfIncome
+    );
     setFormattedValue("0");
     setIncomeValue("0");
-  }, [typeOfIncome, incomeValue]);
+    setCategoryOfIncome(null);
+  }, [typeOfIncome, incomeValue, categoryOfIncome]);
 
+  const handleClickOutcome = useCallback(() => {
+    console.log(
+      Number(incomeValue),
+      categoryOfOutcome && categoryOfOutcome,
+      typeOfOutcome,
+      typeOfPayment,
+      expirationDate
+    );
+    setFormattedValue("0");
+    setIncomeValue("0");
+    setCategoryOfOutcome(null);
+  }, [
+    incomeValue,
+    categoryOfOutcome,
+    typeOfOutcome,
+    typeOfPayment,
+    expirationDate,
+  ]);
   return (
     <main className="h-full flex-1 overflow-y-auto scrollbar-none">
       <div className="mb-10 py-2 lg:py-0 flex-1">
@@ -63,8 +121,8 @@ function HomePage() {
             title="Entradas"
             value="2.500,00"
           />
-          <Card 
-             handleClick={() => handleModal("outcome")}
+          <Card
+            handleClick={() => handleModal("outcome")}
             color="bg-[#FFF4D8]"
             title="Gastos"
             value="500,00"
@@ -99,32 +157,100 @@ function HomePage() {
         </div>
       </div>
       {modal && (
-        // TODO: Criar composition pattern para os MODAIS
         <Modal>
-          {
-            typeModal === "income" && (
-              <CashFlow.Root>
-                <CashFlow.Header titleHeader="Adicionar Entrada" handleClose={handleClose}/>
-                <CashFlow.ContentController>
-                  <Switch onCheckedChange={(checked) => checked ? handleTypeIncome("extra") : handleTypeIncome("sallary")}/>
-                  <p>{typeOfIncome === "sallary" ? "Salário" : "Extra"}</p>
-                </CashFlow.ContentController>
-                <CashFlow.ContentTitle title={typeOfIncome === "sallary" ? "Renda":"Renda Extra"}/>
-                <CashFlow.QuantityInput incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} onBlur={handleFormatIncomeValue}/>
-                <CashFlow.ActionButton buttonTitle={typeOfIncome === "sallary" ? "Atualizar" : "Adicionar"} onClick={handleClick}/>
-              </CashFlow.Root>
-            )
-          }
-          {
-            typeModal === "outcome" && (
-              <CashFlow.Root>
-                <CashFlow.Header titleHeader="Adicionar Gasto" handleClose={handleClose}/>
-                <CashFlow.ContentTitle title="Gasto"/>
-                <CashFlow.QuantityInput incomeValue={formattedValue} changeIncomeValue={handleIncomeValue} onBlur={handleFormatIncomeValue}/>
-                <CashFlow.ActionButton buttonTitle="Adicionar" onClick={handleClick}/>
-              </CashFlow.Root>
-            )
-          }
+          {typeModal === "income" && (
+            <CashFlow.Root>
+              <CashFlow.Header
+                titleHeader="Adicionar Entrada"
+                handleClose={handleClose}
+              />
+              <CashFlow.ContentController>
+                <Switch
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      handleTypeIncome("extra");
+                    } else {
+                      setCategoryOfIncome(null);
+                      handleTypeIncome("sallary");
+                    }
+                  }}
+                />
+                <p>{typeOfIncome === "sallary" ? "Salário" : "Extra"}</p>
+              </CashFlow.ContentController>
+              <CashFlow.ContentTitle
+                title={typeOfIncome === "sallary" ? "Renda" : "Renda Extra"}
+              />
+              <CashFlow.QuantityInput
+                incomeValue={formattedValue}
+                changeIncomeValue={handleIncomeValue}
+                onBlur={handleFormatIncomeValue}
+              />
+              {typeOfIncome === "extra" && (
+                <CashFlow.CategoryContent>
+                  <div className="col-span-2">
+                    <SelectComponent
+                      placeHolder="Selecione uma categoria"
+                      onValueChange={handleCategoryOfIncome}
+                      categories={["Assinatura", "Entretenimento", "Esportes"]}
+                    />
+                  </div>
+                </CashFlow.CategoryContent>
+              )}
+              <CashFlow.ActionButton
+                buttonTitle={
+                  typeOfIncome === "sallary" ? "Atualizar" : "Adicionar"
+                }
+                onClick={handleClickIncome}
+              />
+            </CashFlow.Root>
+          )}
+          {typeModal === "outcome" && (
+            <CashFlow.Root>
+              <CashFlow.Header
+                titleHeader="Adicionar Gasto"
+                handleClose={handleClose}
+              />
+              <CashFlow.ContentTitle title="Gasto" />
+              <CashFlow.QuantityInput
+                incomeValue={formattedValue}
+                changeIncomeValue={handleIncomeValue}
+                onBlur={handleFormatIncomeValue}
+              />
+              <CashFlow.CategoryContent>
+                <SelectComponent
+                  placeHolder="Selecione uma categoria"
+                  onValueChange={handleCategoryOfOutcome}
+                  categories={["Assinatura", "Entretenimento", "Esportes"]}
+                />
+                <SelectComponent
+                  placeHolder="Selecione o tipo do gasto"
+                  onValueChange={handleTypeOutcome}
+                  categories={["Fixo", "Variavel"]}
+                />
+                {typeOfOutcome === "fixo" && (
+                  <>
+                    <SelectComponent
+                      placeHolder="Seleciona a forma de pagamento"
+                      onValueChange={handleTypePayment}
+                      categories={["Credito", "Pix", "Boleto", "Debito"]}
+                    />
+                    {(typeOfPayment === "credito" ||
+                      typeOfPayment === "debito") && (
+                      <SelectComponent
+                        placeHolder="Selecione a data de vecimento"
+                        onValueChange={handleTypePayment}
+                        categories={["Cartao", "Pix", "Boleto", "Debito"]}
+                      />
+                    )}
+                  </>
+                )}
+              </CashFlow.CategoryContent>
+              <CashFlow.ActionButton
+                buttonTitle="Adicionar"
+                onClick={handleClickOutcome}
+              />
+            </CashFlow.Root>
+          )}
         </Modal>
       )}
     </main>
