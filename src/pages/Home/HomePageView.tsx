@@ -12,26 +12,26 @@ import { HomePageViewProps } from "./HomePage.type";
 function HomePageView({ props }: HomePageViewProps) {
   const {
     handleFormatIncomeValue,
-      modal,
-      formattedValue,
-      typeOfIncome,
-      typeOfOutcome,
-      typeOfPayment,
-      expirationDate,
-      typeModal,
-      handleModal,
-      handleClose,
-      handleIncomeValue,
-      handleTypeIncome,
-      handleTypeOutcome,
-      handleExpirationDate,
-      handleTypePayment,
-      handleCategoryOfIncome,
-      handleCategoryOfOutcome,
-      handleClickIncome,
-      handleClickOutcome,
-      validationIncomeValue,
-      validationOutcomeValue
+    modal,
+    formattedValue,
+    typeOfIncome,
+    typeOfOutcome,
+    typeOfPayment,
+    expirationDate,
+    typeModal,
+    handleModal,
+    handleClose,
+    handleIncomeValue,
+    handleTypeIncome,
+    handleTypeOutcome,
+    handleExpirationDate,
+    handleTypePayment,
+    handleCategoryOfIncome,
+    handleCategoryOfOutcome,
+    handleClickIncome,
+    handleClickOutcome,
+    validationIncomeValue,
+    validationOutcomeValue,
   } = props;
 
   return (
@@ -80,104 +80,102 @@ function HomePageView({ props }: HomePageViewProps) {
           <Goals title="Investimentos" amount="1.5k" goal="2.5K" />
         </div>
       </div>
-      {modal && (
-        <Modal>
-          {typeModal === "income" && (
-            <CashFlow.Root>
-              <CashFlow.Header
-                titleHeader="Adicionar Entrada"
-                handleClose={handleClose}
+      <Modal visible={modal}>
+        {typeModal === "income" && (
+          <CashFlow.Root>
+            <CashFlow.Header
+              titleHeader="Adicionar Entrada"
+              handleClose={handleClose}
+            />
+            <CashFlow.ContentController>
+              <Switch
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    handleTypeIncome("extra");
+                  } else {
+                    handleCategoryOfIncome(null);
+                    handleTypeIncome("sallary");
+                  }
+                }}
               />
-              <CashFlow.ContentController>
-                <Switch
-                  onCheckedChange={(checked) => {
-                    if (checked) {
-                      handleTypeIncome("extra");
-                    } else {
-                      handleCategoryOfIncome(null);
-                      handleTypeIncome("sallary");
-                    }
-                  }}
-                />
-                <p>{typeOfIncome === "sallary" ? "Salário" : "Extra"}</p>
-              </CashFlow.ContentController>
-              <CashFlow.ContentTitle
-                title={typeOfIncome === "sallary" ? "Renda" : "Renda Extra"}
-              />
-              <CashFlow.QuantityInput
-                incomeValue={formattedValue}
-                changeIncomeValue={handleIncomeValue}
-                onBlur={handleFormatIncomeValue}
-              />
-              {typeOfIncome === "extra" && (
-                <CashFlow.CategoryContent>
-                  <div className="col-span-2">
-                    <SelectComponent
-                      placeHolder="Selecione uma categoria"
-                      onValueChange={handleCategoryOfIncome}
-                      categories={["Assinatura", "Entretenimento", "Esportes"]}
-                    />
-                  </div>
-                </CashFlow.CategoryContent>
-              )}
-              <CashFlow.ActionButton
-                buttonTitle={
-                  typeOfIncome === "sallary" ? "Atualizar" : "Adicionar"
-                }
-                onClick={handleClickIncome}
-                disabled={!validationIncomeValue()}
-              />
-            </CashFlow.Root>
-          )}
-          {typeModal === "outcome" && (
-            <CashFlow.Root>
-              <CashFlow.Header
-                titleHeader="Adicionar Gasto"
-                handleClose={handleClose}
-              />
-              <CashFlow.ContentTitle title="Gasto" />
-              <CashFlow.QuantityInput
-                incomeValue={formattedValue}
-                changeIncomeValue={handleIncomeValue}
-                onBlur={handleFormatIncomeValue}
-              />
+              <p>{typeOfIncome === "sallary" ? "Salário" : "Extra"}</p>
+            </CashFlow.ContentController>
+            <CashFlow.ContentTitle
+              title={typeOfIncome === "sallary" ? "Renda" : "Renda Extra"}
+            />
+            <CashFlow.QuantityInput
+              incomeValue={formattedValue}
+              changeIncomeValue={handleIncomeValue}
+              onBlur={handleFormatIncomeValue}
+            />
+            {typeOfIncome === "extra" && (
               <CashFlow.CategoryContent>
-                <SelectComponent
-                  placeHolder="Selecione uma categoria"
-                  onValueChange={handleCategoryOfOutcome}
-                  categories={["Assinatura", "Entretenimento", "Esportes"]}
-                />
-                <SelectComponent
-                  placeHolder="Selecione o tipo do gasto"
-                  onValueChange={handleTypeOutcome}
-                  categories={["Fixo", "Variavel"]}
-                />
-                {typeOfOutcome === "fixo" && (
-                  <>
-                    <SelectComponent
-                      placeHolder="Seleciona a forma de pagamento"
-                      onValueChange={handleTypePayment}
-                      categories={["Credito", "Pix", "Boleto", "Debito"]}
-                    />
-                    {(typeOfPayment === "credito" ||
-                      typeOfPayment === "debito") && (
-                      <DatePicker
-                        date={expirationDate}
-                        setDate={handleExpirationDate}
-                      />
-                    )}
-                  </>
-                )}
+                <div className="col-span-2">
+                  <SelectComponent
+                    placeHolder="Selecione uma categoria"
+                    onValueChange={handleCategoryOfIncome}
+                    categories={["Assinatura", "Entretenimento", "Esportes"]}
+                  />
+                </div>
               </CashFlow.CategoryContent>
-              <CashFlow.ActionButton
-                buttonTitle="Adicionar"
-                onClick={handleClickOutcome}
-                disabled={!validationOutcomeValue()}
+            )}
+            <CashFlow.ActionButton
+              buttonTitle={
+                typeOfIncome === "sallary" ? "Atualizar" : "Adicionar"
+              }
+              onClick={handleClickIncome}
+              disabled={!validationIncomeValue()}
+            />
+          </CashFlow.Root>
+        )}
+        {typeModal === "outcome" && (
+          <CashFlow.Root>
+            <CashFlow.Header
+              titleHeader="Adicionar Gasto"
+              handleClose={handleClose}
+            />
+            <CashFlow.ContentTitle title="Gasto" />
+            <CashFlow.QuantityInput
+              incomeValue={formattedValue}
+              changeIncomeValue={handleIncomeValue}
+              onBlur={handleFormatIncomeValue}
+            />
+            <CashFlow.CategoryContent>
+              <SelectComponent
+                placeHolder="Selecione uma categoria"
+                onValueChange={handleCategoryOfOutcome}
+                categories={["Assinatura", "Entretenimento", "Esportes"]}
               />
-            </CashFlow.Root>
-          )}
-        </Modal>
-      )}
+              <SelectComponent
+                placeHolder="Selecione o tipo do gasto"
+                onValueChange={handleTypeOutcome}
+                categories={["Fixo", "Variavel"]}
+              />
+              {typeOfOutcome === "fixo" && (
+                <>
+                  <SelectComponent
+                    placeHolder="Seleciona a forma de pagamento"
+                    onValueChange={handleTypePayment}
+                    categories={["Credito", "Pix", "Boleto", "Debito"]}
+                  />
+                  {(typeOfPayment === "credito" ||
+                    typeOfPayment === "debito") && (
+                    <DatePicker
+                      date={expirationDate}
+                      setDate={handleExpirationDate}
+                    />
+                  )}
+                </>
+              )}
+            </CashFlow.CategoryContent>
+            <CashFlow.ActionButton
+              buttonTitle="Adicionar"
+              onClick={handleClickOutcome}
+              disabled={!validationOutcomeValue()}
+            />
+          </CashFlow.Root>
+        )}
+      </Modal>
     </main>
   );
 }
