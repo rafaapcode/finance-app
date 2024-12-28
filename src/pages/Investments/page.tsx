@@ -1,5 +1,6 @@
 import { LinearAreaChart } from "@/components/charts/linearChart/LinearAreaChart";
 import { PieChartComponent } from "@/components/charts/pieChart/PieChart";
+import { TablePagination } from "@/components/pagination/TablePagination";
 import { InvestmentTable } from "@/components/table/InvestmentTable";
 import { IoFilter, IoSearchOutline } from "react-icons/io5";
 
@@ -34,11 +35,11 @@ function InvestmentsPage() {
             <IoFilter />
           </button>
         </header>
-        <div className="flex-1 mt-1">
+        <div className="flex-1 mt-1 overflow-x-auto">
           <InvestmentTable />
         </div>
-        <div>
-          
+        <div className="self-start">
+          <TablePagination />
         </div>
       </div>
     </main>

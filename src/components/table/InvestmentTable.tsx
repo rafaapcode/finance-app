@@ -76,11 +76,50 @@ const invoices = [
     quantity_supplied: null,
     profit: '0'
   },
+  {
+    name: "INV006",
+    quantity: "10",
+    buy: "R$ 10.00",
+    sell: null,
+    percentage: "10%",
+    category: "Ação",
+    buy_date: new Date(Date.now()).toLocaleDateString(),
+    sell_date: null,
+    last_supply: null,
+    quantity_supplied: null,
+    profit: '0'
+  },
+  {
+    name: "INV007",
+    quantity: "10",
+    buy: "R$ 10.00",
+    sell: null,
+    percentage: "10%",
+    category: "Ação",
+    buy_date: new Date(Date.now()).toLocaleDateString(),
+    sell_date: null,
+    last_supply: null,
+    quantity_supplied: null,
+    profit: '0'
+  },
+  {
+    name: "INV008",
+    quantity: "10",
+    buy: "R$ 10.00",
+    sell: null,
+    percentage: "10%",
+    category: "Ação",
+    buy_date: new Date(Date.now()).toLocaleDateString(),
+    sell_date: null,
+    last_supply: null,
+    quantity_supplied: null,
+    profit: '0'
+  },
 ]
 
 export function InvestmentTable() {
   return (
-    <Table>
+    <Table className="overflow-x-auto">
       <TableHeader>
         <TableRow>
           <TableHead>Nome</TableHead>
