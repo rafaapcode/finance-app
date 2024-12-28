@@ -4,7 +4,6 @@ import { HomePageViewProps } from "./HomePage.type";
 export const useHomePageModel = (): HomePageViewProps => {
   const [modal, setModal] = useState(false);
   const [incomeValue, setIncomeValue] = useState("0");
-  const [formattedValue, setFormattedValue] = useState("0");
   const [typeOfIncome, setTypeOfIncome] = useState<"sallary" | "extra">(
     "sallary"
   );
@@ -30,7 +29,6 @@ export const useHomePageModel = (): HomePageViewProps => {
     setCategoryOfIncome(null);
     setCategoryOfOutcome(null);
     setIncomeValue("0");
-    setFormattedValue("0");
     setExpirationDate(undefined);
     setTypeOfPayment(null);
     setTypeOfOutcome(null);
@@ -43,10 +41,8 @@ export const useHomePageModel = (): HomePageViewProps => {
 
     if (!regex.test(value)) {
       setIncomeValue((prev) => prev);
-      setFormattedValue((prev) => prev);
     } else {
       setIncomeValue(value);
-      setFormattedValue(value);
     }
   }, []);
 
@@ -74,22 +70,12 @@ export const useHomePageModel = (): HomePageViewProps => {
     setCategoryOfOutcome(value);
   }, []);
 
-  const handleFormatIncomeValue = () => {
-    setFormattedValue(
-      new Intl.NumberFormat("pt-BR", {
-        style: "decimal",
-        currency: "BRl",
-      }).format(Number(incomeValue))
-    );
-  };
-
   const handleClickIncome = useCallback(() => {
     console.log(
       typeOfIncome,
       Number(incomeValue),
       categoryOfIncome && categoryOfIncome
     );
-    setFormattedValue("0");
     setIncomeValue("0");
     setCategoryOfIncome(null);
     handleClose();
@@ -103,7 +89,6 @@ export const useHomePageModel = (): HomePageViewProps => {
       typeOfPayment,
       expirationDate
     );
-    setFormattedValue("0");
     setIncomeValue("0");
     setCategoryOfOutcome(null);
     handleClose();
@@ -156,10 +141,8 @@ export const useHomePageModel = (): HomePageViewProps => {
     props: {
       validationOutcomeValue,
       validationIncomeValue,
-      handleFormatIncomeValue,
       modal,
       incomeValue,
-      formattedValue,
       typeOfIncome,
       typeOfOutcome,
       typeOfPayment,

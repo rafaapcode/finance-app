@@ -4,7 +4,6 @@ export type HomePageViewProps = {
   props: {
     modal: boolean;
     incomeValue: string;
-    formattedValue: string;
     typeOfIncome: "sallary" | "extra";
     typeOfOutcome: string | null;
     typeOfPayment: string | null;
@@ -23,7 +22,6 @@ export type HomePageViewProps = {
     handleCategoryOfOutcome: (value: string | null) => void;
     handleClickIncome: () => void;
     handleClickOutcome: () => void;
-    handleFormatIncomeValue: () => void;
     validationIncomeValue: () => boolean;
     validationOutcomeValue: () => boolean;
   };

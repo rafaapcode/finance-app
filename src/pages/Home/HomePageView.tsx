@@ -11,9 +11,8 @@ import { HomePageViewProps } from "./HomePage.type";
 
 function HomePageView({ props }: HomePageViewProps) {
   const {
-    handleFormatIncomeValue,
+    incomeValue,
     modal,
-    formattedValue,
     typeOfIncome,
     typeOfOutcome,
     typeOfPayment,
@@ -104,9 +103,8 @@ function HomePageView({ props }: HomePageViewProps) {
               title={typeOfIncome === "sallary" ? "Renda" : "Renda Extra"}
             />
             <CashFlow.QuantityInput
-              incomeValue={formattedValue}
+              incomeValue={incomeValue}
               changeIncomeValue={handleIncomeValue}
-              onBlur={handleFormatIncomeValue}
             />
             {typeOfIncome === "extra" && (
               <CashFlow.CategoryContent>
@@ -136,9 +134,8 @@ function HomePageView({ props }: HomePageViewProps) {
             />
             <CashFlow.ContentTitle title="Gasto" />
             <CashFlow.QuantityInput
-              incomeValue={formattedValue}
+              incomeValue={incomeValue}
               changeIncomeValue={handleIncomeValue}
-              onBlur={handleFormatIncomeValue}
             />
             <CashFlow.CategoryContent>
               <SelectComponent
