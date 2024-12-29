@@ -18,12 +18,16 @@ function InvestmentsPage() {
   const [typeOfFilter, setTypeOfFilter] = useState<string | null>(null);
   const [investModal, setInvestModal] = useState<boolean>(false);
   const [selectedTypeInvestment, setSelectedTypeInvestment] =
-    useState<string>("aporte");
+    useState<string>("compra");
   const [stockPrice, setStockPrice] = useState<string>("0");
-  const [investmentCategory, setInvestmentCategory] = useState<string | null>(null);
+  const [investmentCategory, setInvestmentCategory] = useState<string | null>(
+    null
+  );
   const [stockName, setStockName] = useState<string>("");
   const [stockQuantity, setStockQuantity] = useState<string>("0");
-  const [investmentDate, setInvestmentDate] = useState<Date | undefined>(undefined);
+  const [investmentDate, setInvestmentDate] = useState<Date | undefined>(
+    undefined
+  );
 
   const handleStockValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const regex = /^\d*$/;
@@ -38,6 +42,10 @@ function InvestmentsPage() {
 
   const handleSelectedTypeInvestment = useCallback(
     (type: string) => {
+      setStockPrice("0");
+      setStockQuantity("0");
+      setInvestmentCategory(null);
+      setInvestmentDate(undefined);
       setSelectedTypeInvestment(type);
     },
     [setSelectedTypeInvestment]
@@ -52,20 +60,77 @@ function InvestmentsPage() {
     setInvestModal((prev) => !prev);
   }, []);
 
-  const handleSetCategory = useCallback((category: string | null) => {
-    setInvestmentCategory(category);
-  }, [setInvestmentCategory]);
+  const handleSetCategory = useCallback(
+    (category: string | null) => {
+      setInvestmentCategory(category);
+    },
+    [setInvestmentCategory]
+  );
 
-  const handleSetStockName = useCallback((stockName: string) => {
-    setStockName(stockName);
-  }, [setStockName]);
-  const handleSetStockQuantity = useCallback((stockQuantity: string) => {
-    setStockQuantity(stockQuantity);
-  }, [setStockQuantity]);
-  const handleSetInvestmentDate = useCallback((date: Date | undefined) => {
-    setInvestmentDate(date);
-  }, [setInvestmentDate]);
-  console.log(investmentCategory, stockName, stockQuantity);
+  const handleSetStockName = useCallback(
+    (stockName: string) => {
+      setStockName(stockName);
+    },
+    [setStockName]
+  );
+  const handleSetStockQuantity = useCallback(
+    (stockQuantity: string) => {
+      setStockQuantity(stockQuantity);
+    },
+    [setStockQuantity]
+  );
+  const handleSetInvestmentDate = useCallback(
+    (date: Date | undefined) => {
+      setInvestmentDate(date);
+    },
+    [setInvestmentDate]
+  );
+
+  const handleBuy = useCallback(() => {
+    setInvestmentCategory(null);
+    setStockName("");
+    setInvestmentDate(undefined);
+    setStockQuantity("0");
+    handleSetInvestModal();
+  }, [handleSetInvestModal]);
+
+  const handleSell = useCallback(() => {
+    setStockName("");
+    setInvestmentDate(undefined);
+    setStockQuantity("0");
+    handleSetInvestModal();
+  }, [handleSetInvestModal]);
+
+  const handleAdd = useCallback(() => {
+    setStockName("");
+    setInvestmentDate(undefined);
+    setStockQuantity("0");
+    handleSetInvestModal();
+  }, [handleSetInvestModal]);
+
+  const validationBuy = (): boolean => {
+    if (
+      stockName === "" ||
+      stockQuantity === "0" ||
+      investmentCategory === null ||
+      investmentDate === undefined
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const validationSellAndAdd = (): boolean => {
+    if (
+      stockName === "" ||
+      stockQuantity === "0" ||
+      investmentDate === undefined
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <main className="h-full flex-1 overflow-y-auto scrollbar-none">
       <div className="w-full max-h-[400px] flex justify-between">
@@ -131,19 +196,110 @@ function InvestmentsPage() {
               handleSelectType={handleSelectedTypeInvestment}
             />
           </CashFlow.ContentController>
-          <CashFlow.ContentTitle title="Preço de Compra" />
-          <CashFlow.QuantityInput
-            incomeValue={stockPrice}
-            changeIncomeValue={handleStockValue}
-            onBlur={() => {}}
-          />
-          <CashFlow.CategoryContent>
-            <InputComponent handleChangeValue={(e) => handleSetStockName(e.target.value)} type="text" placeholder="Nome do ativo"/>
-            <Select onValueChange={handleSetCategory} categories={["Ação", "Fii", "Crypto"]} placeHolder="Selecione uma categoria" />
-            <InputComponent handleChangeValue={(e) => handleSetStockQuantity(e.target.value)} type="number" placeholder="Quantidade comprada/investida"/>
-            <DatePicker date={investmentDate} setDate={handleSetInvestmentDate}/>
-          </CashFlow.CategoryContent>
-          <CashFlow.ActionButton buttonTitle="Comprar" onClick={() => {}}/>
+          {selectedTypeInvestment === "compra" && (
+            <>
+              <CashFlow.ContentTitle title="Preço de Compra" />
+              <CashFlow.QuantityInput
+                incomeValue={stockPrice}
+                changeIncomeValue={handleStockValue}
+                onBlur={() => {}}
+              />
+              <CashFlow.CategoryContent>
+                <InputComponent
+                  handleChangeValue={(e) => handleSetStockName(e.target.value)}
+                  type="text"
+                  placeholder="Nome do ativo"
+                />
+                <Select
+                  onValueChange={handleSetCategory}
+                  categories={["Ação", "Fii", "Crypto"]}
+                  placeHolder="Selecione uma categoria"
+                />
+                <InputComponent
+                  handleChangeValue={(e) =>
+                    handleSetStockQuantity(e.target.value)
+                  }
+                  type="number"
+                  placeholder="Quantidade comprada"
+                />
+                <DatePicker
+                  date={investmentDate}
+                  setDate={handleSetInvestmentDate}
+                />
+              </CashFlow.CategoryContent>
+              <CashFlow.ActionButton
+                disabled={!validationBuy()}
+                buttonTitle="Comprar"
+                onClick={handleBuy}
+              />
+            </>
+          )}
+          {selectedTypeInvestment === "venda" && (
+            <>
+              <CashFlow.ContentTitle title="Preço de Venda" />
+              <CashFlow.QuantityInput
+                incomeValue={stockPrice}
+                changeIncomeValue={handleStockValue}
+                onBlur={() => {}}
+              />
+              <CashFlow.CategoryContent>
+                <InputComponent
+                  handleChangeValue={(e) => handleSetStockName(e.target.value)}
+                  type="text"
+                  placeholder="Nome do ativo"
+                />
+                <InputComponent
+                  handleChangeValue={(e) =>
+                    handleSetStockQuantity(e.target.value)
+                  }
+                  type="number"
+                  placeholder="Quantidade comprada"
+                />
+                <DatePicker
+                  date={investmentDate}
+                  setDate={handleSetInvestmentDate}
+                />
+              </CashFlow.CategoryContent>
+              <CashFlow.ActionButton
+                disabled={!validationSellAndAdd()}
+                buttonTitle="Vender"
+                onClick={handleSell}
+              />
+            </>
+          )}
+          {selectedTypeInvestment === "aporte" && (
+            <>
+              <CashFlow.ContentTitle title="Preço de Compra" />
+              <CashFlow.QuantityInput
+                incomeValue={stockPrice}
+                changeIncomeValue={handleStockValue}
+                onBlur={() => {}}
+              />
+              <CashFlow.CategoryContent>
+                <InputComponent
+                  handleChangeValue={(e) => handleSetStockName(e.target.value)}
+                  type="text"
+                  placeholder="Nome do ativo"
+                />
+                <InputComponent
+                  handleChangeValue={(e) =>
+                    handleSetStockQuantity(e.target.value)
+                  }
+                  type="number"
+                  placeholder="Quantidade comprada"
+                />
+                <DatePicker
+                  date={investmentDate}
+                  setDate={handleSetInvestmentDate}
+                />
+              </CashFlow.CategoryContent>
+              <CashFlow.ActionButton
+                disabled={!validationSellAndAdd()}
+                buttonTitle="Aportar"
+                onClick={handleAdd}
+              />
+            </>
+          )}
         </CashFlow.Root>
       </Modal>
     </main>
