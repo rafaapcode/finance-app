@@ -3,6 +3,7 @@ import { HomePageViewProps } from "./HomePage.type";
 
 export const useHomePageModel = (): HomePageViewProps => {
   const [modal, setModal] = useState(false);
+  const [notificationActive, setNotificationActive] = useState(false);
   const [incomeValue, setIncomeValue] = useState("0");
   const [typeOfIncome, setTypeOfIncome] = useState<"sallary" | "extra">(
     "sallary"
@@ -17,6 +18,10 @@ export const useHomePageModel = (): HomePageViewProps => {
     null
   );
   const [typeModal, setTypeModal] = useState<null | "income" | "outcome">(null);
+
+  const handleNotificationActive = useCallback(() => {
+    setNotificationActive((prev) => !prev);
+  }, []);
 
   const handleModal = useCallback((type: "income" | "outcome" | null) => {
     setModal((prev) => !prev);
@@ -139,6 +144,8 @@ export const useHomePageModel = (): HomePageViewProps => {
 
   return {
     props: {
+      notificationActive, 
+      handleNotificationActive,
       validationOutcomeValue,
       validationIncomeValue,
       modal,

@@ -24,5 +24,7 @@ export type HomePageViewProps = {
     handleClickOutcome: () => void;
     validationIncomeValue: () => boolean;
     validationOutcomeValue: () => boolean;
+    notificationActive: boolean;
+    handleNotificationActive: () => void;
   };
 };

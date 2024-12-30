@@ -31,6 +31,8 @@ function HomePageView({ props }: HomePageViewProps) {
     handleClickOutcome,
     validationIncomeValue,
     validationOutcomeValue,
+    handleNotificationActive,
+    notificationActive
   } = props;
 
   return (
@@ -131,6 +133,9 @@ function HomePageView({ props }: HomePageViewProps) {
             <CashFlow.Header
               titleHeader="Adicionar Gasto"
               handleClose={handleClose}
+              notification
+              seletedNotification={notificationActive}
+              handleNotification={handleNotificationActive}
             />
             <CashFlow.ContentTitle title="Gasto" />
             <CashFlow.QuantityInput
