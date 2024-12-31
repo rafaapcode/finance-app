@@ -1,9 +1,9 @@
-import SettingsPage from "@/pages/Settings/page"
+import SettingsPage from "@/pages/Settings/page";
 
 function Settings() {
   return (
-   <SettingsPage />
-  )
+    <SettingsPage />
+  );
 }
 
-export default Settings
+export default Settings;
