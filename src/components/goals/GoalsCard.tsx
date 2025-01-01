@@ -1,11 +1,16 @@
 import { GoHomeFill } from "react-icons/go";
 
 type GoaslCardProps = {
-  category: string;
-  percentage: number;
+  goals: {
+    id?: string;
+    category: string;
+    percentage: number;
+  }
 };
 
-function GoalsCard({category,percentage}: GoaslCardProps) {
+function GoalsCard({goals}: GoaslCardProps) {
+  const {category,percentage} = goals;
+ 
   return (
     <div className="min-w-[350px] flex justify-between items-center w-fit border border-neutral-300 px-3 py-2 rounded">
       <div className="self-start w-12 h-12 flex items-center justify-center rounded-md overflow-hidden border border-neutral-200">

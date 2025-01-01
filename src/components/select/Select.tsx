@@ -22,11 +22,12 @@ type SelectComponentProps = {
   categories: string[];
   onValueChange: (value: string | null) => void;
   placeHolder: string;
+  disabled?: boolean;
 }
 
-function SelectComponent({categories, onValueChange, placeHolder}: SelectComponentProps) {
+function SelectComponent({categories, onValueChange, placeHolder, disabled}: SelectComponentProps) {
   return (
-    <Select onValueChange={onValueChange}>
+    <Select onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder={placeHolder} />
       </SelectTrigger>

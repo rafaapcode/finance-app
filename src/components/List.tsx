@@ -10,7 +10,7 @@ function List({ Component, items, sourceName }: ListProps) {
   return (
     <>
       {items.map((item, index) => (
-        <Component key={index} {...{ [sourceName]: item }} />
+        <Component key={item.id ? item.id : index} {...{ [sourceName]: item }} />
       ))}
     </>
   );

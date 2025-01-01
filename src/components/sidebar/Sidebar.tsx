@@ -1,8 +1,8 @@
 import { usePathname } from "next/navigation";
+import { AiOutlineAim } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { GoHomeFill } from "react-icons/go";
-import { IoSettings } from "react-icons/io5";
 import UserCard from "../userCard/UserCard";
 import MenuItem from "./MenuItems";
 
@@ -17,12 +17,12 @@ function Sidebar() {
       <div className="flex-1 flex flex-col gap-5">
         <MenuItem Icon={GoHomeFill} routeName="home" isActive={pathName === "/main/home"}/>
         <MenuItem Icon={FaMoneyBill1Wave} routeName="investments" isActive={pathName === "/main/investments"}/>
-        <MenuItem Icon={IoSettings} routeName="settings" isActive={pathName === "/main/settings"}/>
+        <MenuItem Icon={AiOutlineAim} routeName="goals" isActive={pathName === "/main/goals"}/>
         <MenuItem Icon={BsGrid} routeName="general" isActive={pathName === "/main/general"}/>
       </div>
       <div className="lg:hidden xl:block">
         <p className="text-xs">Saldo</p>
-        <p className="text-sm font-semibold">R$ 1.112.500,00</p>
+        <p className="text-xs xl:text-sm font-semibold">R$ 1.112.500,00</p>
       </div>
       <footer>
         <UserCard />
