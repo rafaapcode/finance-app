@@ -1,50 +1,54 @@
-"use client"
+"use client";
 
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
-} from "@/components/ui/card"
+  CardTitle,
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+} from "@/components/ui/chart";
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig
+type LinearAreaChartProps = {
+  config: ChartConfig;
+  data: any[];
+  keysConfig: {
+    dataKey: string;
+    nameKey: string;
+  };
+  title?: string;
+  description?: string;
+};
 
-export function LinearAreaChart() {
+export function LinearAreaChart({
+  config,
+  data,
+  keysConfig,
+  description,
+  title,
+}: LinearAreaChartProps) {
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle>Area Chart</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
+        <CardTitle>{title && "Area Chart"}</CardTitle>
+        {description && (
+          <CardDescription>
+            Showing total visitors for the last 6 months
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent className="h-full">
-        <ChartContainer config={chartConfig} className="h-[80%] w-full">
+        <ChartContainer config={config} className="h-[80%] w-full">
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
               left: 12,
               right: 12,
@@ -52,7 +56,7 @@ export function LinearAreaChart() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey={keysConfig.dataKey}
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -63,7 +67,7 @@ export function LinearAreaChart() {
               content={<ChartTooltipContent indicator="line" />}
             />
             <Line
-              dataKey="desktop"
+              dataKey={keysConfig.nameKey}
               type="natural"
               fill="var(--color-desktop)"
               fillOpacity={0.4}
@@ -73,5 +77,5 @@ export function LinearAreaChart() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
