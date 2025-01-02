@@ -3,6 +3,7 @@ import { AiOutlineAim } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { GoHomeFill } from "react-icons/go";
+import { HiReceiptTax } from "react-icons/hi";
 import UserCard from "../userCard/UserCard";
 import MenuItem from "./MenuItems";
 
@@ -19,6 +20,7 @@ function Sidebar() {
         <MenuItem Icon={FaMoneyBill1Wave} routeName="investments" isActive={pathName === "/main/investments"}/>
         <MenuItem Icon={AiOutlineAim} routeName="goals" isActive={pathName === "/main/goals"}/>
         <MenuItem Icon={BsGrid} routeName="general" isActive={pathName === "/main/general"}/>
+        <MenuItem Icon={HiReceiptTax} routeName="taxes" isActive={pathName === "/main/taxes"}/>
       </div>
       <div className="lg:hidden xl:block">
         <p className="text-xs">Saldo</p>
