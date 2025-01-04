@@ -95,7 +95,7 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
           <LinearAreaChart config={chartConfigLinear} data={chartDataLinear} keysConfig={{dataKey: "month", nameKey: "desktop"}}/>
         </div>
         <div className="w-[35%] max-h-[400px]">
-          <PieChartComponent config={chartConfigPie} data={chartDataPie} keysConfig={{dataKey: "browser", nameKey: "visitors"}}/>
+          <PieChartComponent title="Pie Chart" config={chartConfigPie} data={chartDataPie} keysConfig={{dataKey: 'visitors', nameKey: 'browser'}}/>
         </div>
       </div>
       <div className="flex-1 flex flex-col gap-2 pt-5">
