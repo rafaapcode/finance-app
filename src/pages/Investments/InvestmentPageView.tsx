@@ -1,7 +1,6 @@
 import { LinearAreaChart } from "@/components/charts/linearChart/LinearAreaChart";
 import { PieChartComponent } from "@/components/charts/pieChart/PieChart";
 import DatePicker from "@/components/datePicker/DatePicker";
-import FilterTableModal from "@/components/filters/FilterTable";
 import InputComponent from "@/components/input/InputComponent";
 import { CashFlow } from "@/components/modal/cashFlowModal";
 import Modal from "@/components/modal/Modal";
@@ -10,8 +9,14 @@ import Select from "@/components/select/Select";
 import SelectInvestment from "@/components/select/SelectInvestment";
 import { InvestmentTable } from "@/components/table/InvestmentTable";
 import { ChartConfig } from "@/components/ui/chart";
+import dynamic from "next/dynamic";
+import { BiLoaderAlt } from "react-icons/bi";
 import { IoFilter, IoSearchOutline } from "react-icons/io5";
 import { InvestmentPageViewProps } from "./InvesmentPage.type";
+const FilterTableModal = dynamic(() => import("@/components/filters/FilterTable"), {
+  loading: () => <BiLoaderAlt color="#fff" size={24} className="animate-spin"/>,
+  ssr: false
+});
 
 // Esses dados devem ser obtidos de uma API e estar dentro do MODEL.
 const chartDataPie = [

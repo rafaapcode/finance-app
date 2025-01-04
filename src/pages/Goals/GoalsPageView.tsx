@@ -1,11 +1,14 @@
 import GoalsCard from "@/components/goals/GoalsCard";
-import InputComponent from "@/components/input/InputComponent";
 import List from "@/components/List";
 import Modal from "@/components/modal/Modal";
-import Select from "@/components/select/Select";
+import dynamic from "next/dynamic";
+import { BiLoaderAlt } from "react-icons/bi";
 import { GoPlus } from "react-icons/go";
-import { IoIosClose } from "react-icons/io";
 import { GoalPageViewProps } from "./GoalPage.type";
+const GoalModal = dynamic(() => import("@/components/modal/goal/GoalModal"), {
+  loading: () => <BiLoaderAlt color="#fff" size={24} className="animate-spin" />,
+  ssr: false,
+});
 
 function GoalsPageView({ props }: GoalPageViewProps) {
   const {
@@ -48,46 +51,13 @@ function GoalsPageView({ props }: GoalPageViewProps) {
         }
       </div>
       <Modal visible={openModal}>
-        <div className="flex flex-col min-w-[400px] bg-white p-4 rounded-md">
-          <header className="flex justify-between items-center">
-            <h2 className="text-2xl">Objetivos</h2>
-            <button onClick={handleOpenModal}>
-              <IoIosClose size={28} />
-            </button>
-          </header>
-          <section className="mt-8 flex flex-col gap-4">
-            <div>
-              <p>Categoria</p>
-              <Select
-                disabled={calculateProgress >= 100}
-                placeHolder="Selecione uma categoria"
-                categories={["Ações", "Crypto", "FIIS"]}
-                onValueChange={handleSetNewGoalsCategory}
-              />
-            </div>
-            <div>
-              <p>Porcentagem</p>
-              <p className="text-xs">
-                Coloque aqui a porcentagem que deseja atribuir a essa categoria
-              </p>
-              <InputComponent
-                props={{ max: 100, min: 1, defaultValue: 1 }}
-                type="number"
-                placeholder="Selecione uma porcentagem"
-                handleChangeValue={handleSetNewGoalsPercentage}
-              />
-            </div>
-          </section>
-          <footer className="mt-4 mx-auto">
-            <button
-              disabled={calculateProgress >= 100}
-              onClick={handleAddNewGoals}
-              className="px-3 py-1 border border-neutral-300 rounded-md hover:bg-neutral-100 transition-all duration-150"
-            >
-              Criar objetivo
-            </button>
-          </footer>
-        </div>
+        <GoalModal
+          calculateProgress={calculateProgress}
+          handleAddNewGoals={handleAddNewGoals}
+          handleOpenModal={handleOpenModal}
+          handleSetNewGoalsCategory={handleSetNewGoalsCategory}
+          handleSetNewGoalsPercentage={handleSetNewGoalsPercentage}
+        />
       </Modal>
     </main>
   );

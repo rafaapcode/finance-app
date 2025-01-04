@@ -7,6 +7,7 @@ import { BiLoaderAlt } from "react-icons/bi";
 import UserImg from "../../../public/user-img.jpg";
 const UploadModal = dynamic(() => import("@/components/uploadPhoto/UploadModal"), {
   loading: () => <BiLoaderAlt color="#fff" size={24} className="animate-spin"/>,
+  ssr: false
 });
 
 function ProfilePage() {
