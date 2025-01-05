@@ -2,8 +2,8 @@ import { LinearAreaChart } from "@/components/charts/linearChart/LinearAreaChart
 import { PieChartComponent } from "@/components/charts/pieChart/PieChart";
 import DatePicker from "@/components/datePicker/DatePicker";
 import InputComponent from "@/components/input/InputComponent";
-import { CashFlow } from "@/components/modal/cashFlowModal";
 import Modal from "@/components/modal/Modal";
+import { StructureModal } from "@/components/modal/structureModal";
 import { TablePagination } from "@/components/pagination/TablePagination";
 import Select from "@/components/select/Select";
 import SelectInvestment from "@/components/select/SelectInvestment";
@@ -147,26 +147,26 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
         </div>
       </div>
       <Modal visible={investModal}>
-        <CashFlow.Root>
-          <CashFlow.Header
+        <StructureModal.Root>
+          <StructureModal.Header
             handleClose={handleSetInvestModal}
             titleHeader="Novo investimento"
           />
-          <CashFlow.ContentController>
+          <StructureModal.ContentController>
             <SelectInvestment
               selectedType={selectedTypeInvestment}
               handleSelectType={handleSelectedTypeInvestment}
             />
-          </CashFlow.ContentController>
+          </StructureModal.ContentController>
           {selectedTypeInvestment === "compra" && (
             <>
-              <CashFlow.ContentTitle title="Preço de Compra" />
-              <CashFlow.QuantityInput
+              <StructureModal.ContentTitle title="Preço de Compra" />
+              <StructureModal.QuantityInput
                 incomeValue={stockPrice}
                 changeIncomeValue={handleStockValue}
                 onBlur={() => {}}
               />
-              <CashFlow.CategoryContent>
+              <StructureModal.CategoryContent>
                 <InputComponent
                   handleChangeValue={(e) => handleSetStockName(e.target.value)}
                   type="text"
@@ -188,8 +188,8 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
                   date={investmentDate}
                   setDate={handleSetInvestmentDate}
                 />
-              </CashFlow.CategoryContent>
-              <CashFlow.ActionButton
+              </StructureModal.CategoryContent>
+              <StructureModal.ActionButton
                 disabled={!validationBuy()}
                 buttonTitle="Comprar"
                 onClick={handleBuy}
@@ -198,13 +198,13 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
           )}
           {selectedTypeInvestment === "venda" && (
             <>
-              <CashFlow.ContentTitle title="Preço de Venda" />
-              <CashFlow.QuantityInput
+              <StructureModal.ContentTitle title="Preço de Venda" />
+              <StructureModal.QuantityInput
                 incomeValue={stockPrice}
                 changeIncomeValue={handleStockValue}
                 onBlur={() => {}}
               />
-              <CashFlow.CategoryContent>
+              <StructureModal.CategoryContent>
                 <InputComponent
                   handleChangeValue={(e) => handleSetStockName(e.target.value)}
                   type="text"
@@ -221,8 +221,8 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
                   date={investmentDate}
                   setDate={handleSetInvestmentDate}
                 />
-              </CashFlow.CategoryContent>
-              <CashFlow.ActionButton
+              </StructureModal.CategoryContent>
+              <StructureModal.ActionButton
                 disabled={!validationSellAndAdd()}
                 buttonTitle="Vender"
                 onClick={handleSell}
@@ -231,13 +231,13 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
           )}
           {selectedTypeInvestment === "aporte" && (
             <>
-              <CashFlow.ContentTitle title="Preço de Compra" />
-              <CashFlow.QuantityInput
+              <StructureModal.ContentTitle title="Preço de Compra" />
+              <StructureModal.QuantityInput
                 incomeValue={stockPrice}
                 changeIncomeValue={handleStockValue}
                 onBlur={() => {}}
               />
-              <CashFlow.CategoryContent>
+              <StructureModal.CategoryContent>
                 <InputComponent
                   handleChangeValue={(e) => handleSetStockName(e.target.value)}
                   type="text"
@@ -254,15 +254,15 @@ function InvestmentPageView({ props }: InvestmentPageViewProps) {
                   date={investmentDate}
                   setDate={handleSetInvestmentDate}
                 />
-              </CashFlow.CategoryContent>
-              <CashFlow.ActionButton
+              </StructureModal.CategoryContent>
+              <StructureModal.ActionButton
                 disabled={!validationSellAndAdd()}
                 buttonTitle="Aportar"
                 onClick={handleAdd}
               />
             </>
           )}
-        </CashFlow.Root>
+        </StructureModal.Root>
       </Modal>
     </main>
   );

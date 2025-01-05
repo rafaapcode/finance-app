@@ -1,8 +1,8 @@
 import Card from "@/components/card/Card";
 import DatePicker from "@/components/datePicker/DatePicker";
 import Goals from "@/components/goals/Goals";
-import { CashFlow } from "@/components/modal/cashFlowModal";
 import Modal from "@/components/modal/Modal";
+import { StructureModal } from "@/components/modal/structureModal";
 import SelectComponent from "@/components/select/Select";
 import SpendCard from "@/components/spendCard/SpendCard";
 import { Switch } from "@/components/ui/switch";
@@ -83,12 +83,12 @@ function HomePageView({ props }: HomePageViewProps) {
       </div>
       <Modal visible={modal}>
         {typeModal === "income" && (
-          <CashFlow.Root>
-            <CashFlow.Header
+          <StructureModal.Root>
+            <StructureModal.Header
               titleHeader="Adicionar Entrada"
               handleClose={handleClose}
             />
-            <CashFlow.ContentController>
+            <StructureModal.ContentController>
               <Switch
                 onCheckedChange={(checked) => {
                   if (checked) {
@@ -100,16 +100,16 @@ function HomePageView({ props }: HomePageViewProps) {
                 }}
               />
               <p>{typeOfIncome === "sallary" ? "Salário" : "Extra"}</p>
-            </CashFlow.ContentController>
-            <CashFlow.ContentTitle
+            </StructureModal.ContentController>
+            <StructureModal.ContentTitle
               title={typeOfIncome === "sallary" ? "Renda" : "Renda Extra"}
             />
-            <CashFlow.QuantityInput
+            <StructureModal.QuantityInput
               incomeValue={incomeValue}
               changeIncomeValue={handleIncomeValue}
             />
             {typeOfIncome === "extra" && (
-              <CashFlow.CategoryContent>
+              <StructureModal.CategoryContent>
                 <div className="col-span-2">
                   <SelectComponent
                     placeHolder="Selecione uma categoria"
@@ -117,32 +117,32 @@ function HomePageView({ props }: HomePageViewProps) {
                     categories={["Assinatura", "Entretenimento", "Esportes"]}
                   />
                 </div>
-              </CashFlow.CategoryContent>
+              </StructureModal.CategoryContent>
             )}
-            <CashFlow.ActionButton
+            <StructureModal.ActionButton
               buttonTitle={
                 typeOfIncome === "sallary" ? "Atualizar" : "Adicionar"
               }
               onClick={handleClickIncome}
               disabled={!validationIncomeValue()}
             />
-          </CashFlow.Root>
+          </StructureModal.Root>
         )}
         {typeModal === "outcome" && (
-          <CashFlow.Root>
-            <CashFlow.Header
+          <StructureModal.Root>
+            <StructureModal.Header
               titleHeader="Adicionar Gasto"
               handleClose={handleClose}
               notification
               seletedNotification={notificationActive}
               handleNotification={handleNotificationActive}
             />
-            <CashFlow.ContentTitle title="Gasto" />
-            <CashFlow.QuantityInput
+            <StructureModal.ContentTitle title="Gasto" />
+            <StructureModal.QuantityInput
               incomeValue={incomeValue}
               changeIncomeValue={handleIncomeValue}
             />
-            <CashFlow.CategoryContent>
+            <StructureModal.CategoryContent>
               <SelectComponent
                 placeHolder="Selecione uma categoria"
                 onValueChange={handleCategoryOfOutcome}
@@ -169,13 +169,13 @@ function HomePageView({ props }: HomePageViewProps) {
                   )}
                 </>
               )}
-            </CashFlow.CategoryContent>
-            <CashFlow.ActionButton
+            </StructureModal.CategoryContent>
+            <StructureModal.ActionButton
               buttonTitle="Adicionar"
               onClick={handleClickOutcome}
               disabled={!validationOutcomeValue()}
             />
-          </CashFlow.Root>
+          </StructureModal.Root>
         )}
       </Modal>
     </main>

@@ -6,7 +6,7 @@ import Header from "./Header";
 import QuantityInput from "./QuantityInput";
 import Root from "./Root";
 
-export const CashFlow = {
+export const StructureModal = {
   Root,
   Header,
   ContentTitle,
