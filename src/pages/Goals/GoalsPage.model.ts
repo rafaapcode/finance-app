@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { GoalPageViewProps, GoalsType } from "./GoalPage.type";
@@ -19,9 +20,9 @@ export const useGoalsPageModal = (): GoalPageViewProps => {
     (value: string | null) =>
       setNewGoals((prev) => {
         if (prev) {
-          return { ...prev, category: value || "" };
+          return { ...prev, id:prev.id + 1, category: value || "" };
         }
-        return { category: value || "", percentage: 1 };
+        return { id: nanoid(), category: value || "", percentage: 1 };
       }),
     [setNewGoals]
   );
@@ -32,7 +33,7 @@ export const useGoalsPageModal = (): GoalPageViewProps => {
         if (prev) {
           return { ...prev, percentage: Number(value.target.value) || 0 };
         }
-        return { category: "", percentage: Number(value.target.value) || 0 };
+        return { id: nanoid(), category: "", percentage: Number(value.target.value) || 0 };
       }),
     [setNewGoals]
   );
@@ -73,6 +74,10 @@ export const useGoalsPageModal = (): GoalPageViewProps => {
     }
   };
 
+  const handleDeleteGoals = useCallback( (category: string) => {
+    console.log(category);
+  }, []);
+
   return {
     props: {
       openModal,
@@ -83,6 +88,7 @@ export const useGoalsPageModal = (): GoalPageViewProps => {
       calculateProgress,
       handleSetNewGoalsCategory,
       handleSetNewGoalsPercentage,
+      handleDeleteGoals,
     }
   }
 };

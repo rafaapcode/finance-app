@@ -1,5 +1,4 @@
 import GoalsCard from "@/components/goals/GoalsCard";
-import List from "@/components/List";
 import Modal from "@/components/modal/Modal";
 import dynamic from "next/dynamic";
 import { BiLoaderAlt } from "react-icons/bi";
@@ -19,6 +18,7 @@ function GoalsPageView({ props }: GoalPageViewProps) {
     handleSetNewGoalsCategory,
     handleSetNewGoalsPercentage,
     openModal,
+    handleDeleteGoals
   } = props;
 
   return (
@@ -43,11 +43,9 @@ function GoalsPageView({ props }: GoalPageViewProps) {
       </div>
       <div className="flex-1 flex flex-col gap-2 mt-6">
         {
-          <List
-            Component={GoalsCard}
-            items={Array.from(goals.values())}
-            sourceName="goals"
-          />
+          Array.from(goals.values()).map((goals) => (
+            <GoalsCard goals={goals} key={goals.id} onDelete={handleDeleteGoals}/>
+          ))
         }
       </div>
       <Modal visible={openModal}>

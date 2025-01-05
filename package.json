@@ -23,6 +23,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.5.1",
     "lucide-react": "^0.469.0",
+    "nanoid": "^5.0.9",
     "next": "15.1.2",
     "react": "^19.0.0",
     "react-day-picker": "^8.10.1",

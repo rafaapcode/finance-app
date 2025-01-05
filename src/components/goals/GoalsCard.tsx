@@ -1,15 +1,17 @@
 import { GoHomeFill } from "react-icons/go";
+import { IoMdCloseCircle } from "react-icons/io";
 
 type GoaslCardProps = {
   goals: {
-    id?: string;
+    id: string;
     category: string;
     percentage: number;
-  }
+  },
+  onDelete: (id: string) => void;
 };
 
-function GoalsCard({goals}: GoaslCardProps) {
-  const {category,percentage} = goals;
+function GoalsCard({goals,onDelete}: GoaslCardProps) {
+  const { category,percentage } = goals;
  
   return (
     <div className="min-w-[350px] flex justify-between items-center w-fit border border-neutral-300 px-3 py-2 rounded">
@@ -24,6 +26,9 @@ function GoalsCard({goals}: GoaslCardProps) {
         <p className="text-xs">Porcentagem</p>
         <p className="text-lg text-center font-semibold">{`${percentage}%`}</p>
       </div>
+      <button onClick={() => onDelete(category)}>
+        <IoMdCloseCircle className="text-red-500 hover:text-red-400 transition-all duration-150"/>
+      </button>
     </div>
   )
 }
