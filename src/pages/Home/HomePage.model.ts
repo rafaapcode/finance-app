@@ -1,43 +1,39 @@
+import useModal from "@/hooks/useModal";
+import useType from "@/hooks/useType";
 import { ChangeEvent, useCallback, useState } from "react";
 import { HomePageViewProps } from "./HomePage.type";
 
+type TypeOfIncome = "sallary" | "extra";
+type DefaultType = string | null;
+type ExpirationDate = Date | undefined;
+
 export const useHomePageModel = (): HomePageViewProps => {
-  const [modal, setModal] = useState(false);
-  const [notificationActive, setNotificationActive] = useState(false);
+  const [modal, handle, setModal] = useModal();
+  const [notificationActive, handleNotificationActive] = useModal();
   const [incomeValue, setIncomeValue] = useState("0");
-  const [typeOfIncome, setTypeOfIncome] = useState<"sallary" | "extra">(
-    "sallary"
-  );
-  const [typeOfOutcome, setTypeOfOutcome] = useState<string | null>("variable");
-  const [typeOfPayment, setTypeOfPayment] = useState<string | null>("Credito");
-  const [expirationDate, setExpirationDate] = useState<Date | undefined>(
-    undefined
-  );
-  const [categoryOfIncome, setCategoryOfIncome] = useState<string | null>(null);
-  const [categoryOfOutcome, setCategoryOfOutcome] = useState<string | null>(
-    null
-  );
+  const [typeOfIncome, handleTypeIncome] = useType<TypeOfIncome, "sallary">({defaultValue: "sallary"});
+  const [typeOfOutcome, handleTypeOutcome] = useType<DefaultType, string>({defaultValue: "variable"});
+  const [typeOfPayment, handleTypePayment] = useType<DefaultType, string>({defaultValue: "Credito"});
+  const [expirationDate, handleExpirationDate] = useType<ExpirationDate, undefined>({defaultValue: undefined});
+  const [categoryOfIncome, handleCategoryOfIncome] = useType<DefaultType, null>({defaultValue: null});
+  const [categoryOfOutcome, handleCategoryOfOutcome] = useType<DefaultType, null>({defaultValue: null});
   const [typeModal, setTypeModal] = useState<null | "income" | "outcome">(null);
 
-  const handleNotificationActive = useCallback(() => {
-    setNotificationActive((prev) => !prev);
-  }, []);
-
   const handleModal = useCallback((type: "income" | "outcome" | null) => {
-    setModal((prev) => !prev);
+    handle();
     setTypeModal(type);
   }, []);
 
   const handleClose = useCallback(() => {
     setModal(false);
     setTypeModal(null);
-    setCategoryOfIncome(null);
-    setCategoryOfOutcome(null);
+    handleCategoryOfIncome(null);
+    handleCategoryOfOutcome(null);
     setIncomeValue("0");
-    setExpirationDate(undefined);
-    setTypeOfPayment(null);
-    setTypeOfOutcome(null);
-    setTypeOfIncome("sallary");
+    handleExpirationDate(undefined);
+    handleTypePayment(null);
+    handleTypeOutcome(null);
+    handleTypeIncome("sallary");
   }, []);
 
   const handleIncomeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -51,30 +47,6 @@ export const useHomePageModel = (): HomePageViewProps => {
     }
   }, []);
 
-  const handleTypeIncome = useCallback((typeIncome: "sallary" | "extra") => {
-    setTypeOfIncome(typeIncome);
-  }, []);
-
-  const handleTypeOutcome = useCallback((value: string | null) => {
-    setTypeOfOutcome(value);
-  }, []);
-
-  const handleExpirationDate = useCallback((value: Date | undefined) => {
-    setExpirationDate(value);
-  }, []);
-
-  const handleTypePayment = useCallback((value: string | null) => {
-    setTypeOfPayment(value);
-  }, []);
-
-  const handleCategoryOfIncome = useCallback((value: string | null) => {
-    setCategoryOfIncome(value);
-  }, []);
-
-  const handleCategoryOfOutcome = useCallback((value: string | null) => {
-    setCategoryOfOutcome(value);
-  }, []);
-
   const handleClickIncome = useCallback(() => {
     console.log(
       typeOfIncome,
@@ -82,9 +54,9 @@ export const useHomePageModel = (): HomePageViewProps => {
       categoryOfIncome && categoryOfIncome
     );
     setIncomeValue("0");
-    setCategoryOfIncome(null);
+    handleCategoryOfIncome(null);
     handleClose();
-  }, [typeOfIncome, incomeValue, categoryOfIncome, handleClose]);
+  }, [typeOfIncome, incomeValue, categoryOfIncome, handleClose, handleCategoryOfIncome]);
 
   const handleClickOutcome = useCallback(() => {
     console.log(
@@ -95,7 +67,7 @@ export const useHomePageModel = (): HomePageViewProps => {
       expirationDate
     );
     setIncomeValue("0");
-    setCategoryOfOutcome(null);
+    handleCategoryOfOutcome(null);
     handleClose();
   }, [
     incomeValue,
@@ -104,6 +76,7 @@ export const useHomePageModel = (): HomePageViewProps => {
     typeOfPayment,
     expirationDate,
     handleClose,
+    handleCategoryOfOutcome
   ]);
 
   const validationIncomeValue = (): boolean => {

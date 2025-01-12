@@ -1,10 +1,11 @@
+import useModal from "@/hooks/useModal";
 import { nanoid } from "nanoid";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { GoalPageViewProps, GoalsType } from "./GoalPage.type";
 
 export const useGoalsPageModal = (): GoalPageViewProps => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, handleOpenModal] = useModal(); // Modal
   const [goals, setGoals] = useState<Map<string, GoalsType>>(new Map());
   const [newgoals, setNewGoals] = useState<GoalsType | null>(null);
 
@@ -37,10 +38,6 @@ export const useGoalsPageModal = (): GoalPageViewProps => {
       }),
     [setNewGoals]
   );
-
-  const handleOpenModal = useCallback(() => {
-    setOpenModal((prev) => !prev);
-  }, []);
 
   const handleAddNewGoals = () => {
     if (calculateProgress + (newgoals?.percentage || 0) >= 100) {

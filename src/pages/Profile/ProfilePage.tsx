@@ -1,8 +1,8 @@
 "use client";
 import Modal from "@/components/modal/Modal";
+import useModal from "@/hooks/useModal";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useCallback, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import UserImg from "../../../public/user-img.jpg";
 const UploadModal = dynamic(() => import("@/components/uploadPhoto/UploadModal"), {
@@ -11,10 +11,7 @@ const UploadModal = dynamic(() => import("@/components/uploadPhoto/UploadModal")
 });
 
 function ProfilePage() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const handleModal = useCallback(() => {
-    setModalVisible(prev => !prev);
-  }, []);
+  const [modalVisible, handleModal] = useModal();
 
   return (
     <div className="container mx-auto flex flex-col gap-2">

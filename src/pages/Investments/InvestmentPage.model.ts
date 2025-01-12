@@ -1,10 +1,11 @@
+import useModal from "@/hooks/useModal";
 import { ChangeEvent, useCallback, useState } from "react";
 import { InvestmentPageViewProps } from "./InvesmentPage.type";
 
 export const useInvestmentPageModel = (): InvestmentPageViewProps => {
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [openFilter,, setOpenFilter] = useModal();
   const [typeOfFilter, setTypeOfFilter] = useState<string | null>(null);
-  const [investModal, setInvestModal] = useState<boolean>(false);
+  const [investModal, handleSetInvestModal] = useModal();
   const [selectedTypeInvestment, setSelectedTypeInvestment] =
     useState<string>("compra");
   const [stockPrice, setStockPrice] = useState<string>("0");
@@ -42,10 +43,6 @@ export const useInvestmentPageModel = (): InvestmentPageViewProps => {
   const handleTypeOfFilter = useCallback((type: string | null) => {
     setTypeOfFilter(type);
     setOpenFilter(false);
-  }, []);
-
-  const handleSetInvestModal = useCallback(() => {
-    setInvestModal((prev) => !prev);
   }, []);
 
   const handleSetCategory = useCallback(
