@@ -1,17 +1,18 @@
 import useModal from "@/hooks/useModal";
+import useType from "@/hooks/useType";
 import { ChangeEvent, useCallback, useState } from "react";
 import { InvestmentPageViewProps } from "./InvesmentPage.type";
 
+type DefaultType = string | null;
+
 export const useInvestmentPageModel = (): InvestmentPageViewProps => {
   const [openFilter,, setOpenFilter] = useModal();
-  const [typeOfFilter, setTypeOfFilter] = useState<string | null>(null);
   const [investModal, handleSetInvestModal] = useModal();
+  const [typeOfFilter, setTypeOfFilter] = useState<string | null>(null);
   const [selectedTypeInvestment, setSelectedTypeInvestment] =
     useState<string>("compra");
   const [stockPrice, setStockPrice] = useState<string>("0");
-  const [investmentCategory, setInvestmentCategory] = useState<string | null>(
-    null
-  );
+  const [investmentCategory, handleSetCategory] = useType<DefaultType, null>({defaultValue: null});
   const [stockName, setStockName] = useState<string>("");
   const [stockQuantity, setStockQuantity] = useState<string>("0");
   const [investmentDate, setInvestmentDate] = useState<Date | undefined>(
@@ -33,24 +34,17 @@ export const useInvestmentPageModel = (): InvestmentPageViewProps => {
     (type: string) => {
       setStockPrice("0");
       setStockQuantity("0");
-      setInvestmentCategory(null);
+      handleSetCategory(null);
       setInvestmentDate(undefined);
       setSelectedTypeInvestment(type);
     },
-    [setSelectedTypeInvestment]
+    [setSelectedTypeInvestment, handleSetCategory]
   );
 
   const handleTypeOfFilter = useCallback((type: string | null) => {
     setTypeOfFilter(type);
     setOpenFilter(false);
   }, []);
-
-  const handleSetCategory = useCallback(
-    (category: string | null) => {
-      setInvestmentCategory(category);
-    },
-    [setInvestmentCategory]
-  );
 
   const handleSetStockName = useCallback(
     (stockName: string) => {
@@ -72,12 +66,12 @@ export const useInvestmentPageModel = (): InvestmentPageViewProps => {
   );
 
   const handleBuy = useCallback(() => {
-    setInvestmentCategory(null);
+    handleSetCategory(null);
     setStockName("");
     setInvestmentDate(undefined);
     setStockQuantity("0");
     handleSetInvestModal();
-  }, [handleSetInvestModal]);
+  }, [handleSetInvestModal, handleSetCategory]);
 
   const handleSell = useCallback(() => {
     setStockName("");

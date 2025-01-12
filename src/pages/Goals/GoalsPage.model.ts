@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { GoalPageViewProps, GoalsType } from "./GoalPage.type";
 
 export const useGoalsPageModal = (): GoalPageViewProps => {
-  const [openModal, handleOpenModal] = useModal(); // Modal
+  const [openModal, handleOpenModal] = useModal();
   const [goals, setGoals] = useState<Map<string, GoalsType>>(new Map());
   const [newgoals, setNewGoals] = useState<GoalsType | null>(null);
 

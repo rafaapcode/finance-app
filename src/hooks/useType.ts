@@ -13,7 +13,7 @@ function useType<StateType, DefaultValue extends StateType>({defaultValue}: UseT
   const [type, setType] = useState<StateType>(defaultValue);
   const handleType = useCallback((value: StateType) => {
     setType(value);
-  }, []);
+  }, [setType]);
   
   return [type, handleType];
 }
